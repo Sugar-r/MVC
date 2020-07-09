@@ -1,0 +1,61 @@
+  
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>登录页面</title>
+
+ <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body style="text-align: center;">
+	<h1>麦思渠道管理系统</h1>
+	<form action="#" method="post">
+		<table style="border: #FFC0CB 1px dotted; border-spacing: 20px;"align="center">
+			<tr>
+				<td>用户名</td>
+				<td><input type="text" name="username" id="username" placeholder="请输入用户名"/>
+				<div style="width: 100px;display: inline;color: red;">
+					<i class="fa fa-times-circle"aria-hidden="true" style="display: none;"id="false">用户名不存在</i>
+				</div>
+				<i class="fa fa-check-circle"aria-hidden="true" style="color: green;display: none;"id="true"></i></td>
+			</tr>
+			<tr >
+				<td>密&nbsp;&nbsp;码</td>
+				<td align="left"><input type="password" name="password" placeholder="请输入密码"></td>
+			</tr>
+
+				<td></td>
+				<td  align="left"><input type="submit" value="登录" style="margin-right: 50px;"/> <a href="#"><sub>注册</sub></a></td>
+				
+			</tr>
+		</table>
+	</form>
+
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$("#username").focus().blur(function(ev){
+							$.ajax({
+								type:"post",
+								url:"http://localhost:8080/MVC/user/existServlet",
+		//						type:"get",
+		//						url:"json/user-existServlet/success.json",
+		//						url:"json/user-existServlet/error.json",
+								data:{
+										username:$("#username").val()
+												},
+
+								success:function(res){
+								
+									var response =JSON.parse(res);
+									if(response.status == 202){
+										$("#true").css("display","inline");
+									}else{
+										$("#false").html(response.msg).css({"display":"inline"});
+									}
+								}
+							});
+						});
+			
+		</script>
+</body>
+</html>

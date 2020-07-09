@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table id="products" border="1" >
+		<tr>
+			<th>key</th>
+			<th>value</th>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	
+		//重构--回调函数
+					//method 请求方式 url  callback当请求成功时，执行的回调函数
+					function myAjax(method, url, callback) {
+						var ajax = new XMLHttpRequest();
+						ajax.onreadystatechange = function() {
+							if(ajax.readyState == 4 && ajax.status == 200) {
+								callback(JSON.parse(ajax.responseText));
+							}
+						}
+						ajax.open(method, url, true);
+						ajax.send();
+					}
+		
+					function getUsersInfo(users) {
+					
+						for(var i in users) {
+							var user = users[i];
+							var tdNode1 = document.createElement("td");
+							tdNode1.innerHTML = user.userName;
+							var tdNode2 = document.createElement("td");
+							tdNode2.innerHTML = user.password;
+							
+							var trNode = document.createElement("tr");
+							trNode.appendChild(tdNode1);
+							trNode.appendChild(tdNode2);
+							document.getElementById("products").appendChild(trNode);
+						}
+					}
+		
+					function getProductsInfo(products) {
+						for(var i in products) {
+							var product = products[i];
+							//							console.log(JSON.stringify(product));
+							var trNode = document.createElement("tr");
+							var nameNode = document.createElement("td");
+							nameNode.innerHTML = product.ename;
+							var priceNode = document.createElement("td");
+							priceNode.innerHTML = product.empno;
+							trNode.appendChild(nameNode);
+							trNode.appendChild(priceNode);
+							document.querySelector("#products").appendChild(trNode);
+						}
+					}
+					
+					document.body.onload = function() {
+						myAjax("GET", "http://localhost:8080/MVC/ProductsFindAll", getUsersInfo);
+						myAjax("GET", "http://localhost:8080/MVC/EmpFindAllServlet", getProductsInfo);
+					}
+
+	</script>
+
+</body>
+</html>

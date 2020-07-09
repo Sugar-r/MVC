@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>三国群侠传</title>
+<style  type="text/css">
+ span{
+ margin:10px;
+ display:inline-block;
+ width:100px;
+ height:150px;
+ background-color: #ADFF2F;
+ 
+ }
+ ul{
+ margin:0px;
+ padding:0px;
+ list-style:none;
+ background-color:pink;
+ text-align:center;
+ }
+ li{background:#ADFF2F;
+ list-style-position:inside;
+ }
+ div{
+ padding-left:30px}
+ img:not(#a){
+ width:100px;
+ height:100px;}
+</style>
+</head>
+<body>
+<h1>三国演义--蜀国传奇</h1>
+
+<p><img id="a" src="img/1.jpg" width=200>
+</p><hr/>
+<div id="users">
+
+
+<div>
+	<script type="text/javascript">
+ document.body.onload =function getUsersInfo(){
+				// alert('test');
+				 var ajax = new XMLHttpRequest();
+				 			//定义，如果请求被服务器应答，那么返回值如何处理
+				 			ajax.onreadystatechange = function(){
+				 				if(ajax.readyState == 4 && ajax.status == 200){
+				 					var users = JSON.parse(ajax.responseText);
+				 					
+				 					var dusers = document.getElementById("users");
+										for(var i in users){
+											var user = users[i];
+											var dspan = document.createElement("span");
+											var dimg = document.createElement("img");
+											var dul = document.createElement("ul");
+											var dli1 = document.createElement("li");
+											dli1.innerHTML = user.id;
+											var dli2 = document.createElement("li");
+											dli2.innerHTML = user.name;
+											var dli3 = document.createElement("li");
+											dli3.innerHTML = user.power;
+											dimg.src =user.img;
+											
+											dul.appendChild(dli1);
+											dul.appendChild(dli2);
+											dul.appendChild(dli3);
+											
+											dusers.appendChild(dspan);
+											dspan.appendChild(dimg);
+											dspan.appendChild(dul);
+										
+										}
+				 					
+				 				}
+				 			}
+				 			ajax.open("GET","http://localhost:8080/MVC/ProductFindAllServlet",true);
+				 			ajax.send(); 
+			
+		 }		
+	</script>	
+</body>
+</html>
